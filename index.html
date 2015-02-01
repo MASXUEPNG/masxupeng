@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Masxupeng by MASXUEPNG</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/MASXUEPNG/masxupeng">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/MASXUEPNG/masxupeng/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/MASXUEPNG/masxupeng/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Masxupeng</h1>
+          <p>Python 爬虫利器之先锋利器urllib</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/MASXUEPNG">MASXUEPNG</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="python爬虫利器之先锋利器urllib" class="anchor" href="#python%E7%88%AC%E8%99%AB%E5%88%A9%E5%99%A8%E4%B9%8B%E5%85%88%E9%94%8B%E5%88%A9%E5%99%A8urllib" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python爬虫利器之先锋利器urllib</h1>
+
+<h2>
+<a id="徐鹏--2015年1月28日-于悉尼" class="anchor" href="#%E5%BE%90%E9%B9%8F--2015%E5%B9%B41%E6%9C%8828%E6%97%A5-%E4%BA%8E%E6%82%89%E5%B0%BC" aria-hidden="true"><span class="octicon octicon-link"></span></a>徐鹏  2015年1月28日 于悉尼</h2>
+
+<p>接下来的几次分享，我想和大家聊聊Python的爬虫利器。爬虫利器虽多，但我觉得以下五种利器实为基石，汝若搞懂这五大利器，那恭喜你，你已进化成为webspider了。废话些许，接下来我们看看哪五大利器，让我们以热烈的掌声欢迎利器登场，它们分别是先锋利器urllib、表单利器urllib2、偷盗利器cookielib、匹配利器re和解析利器pyquery。今天，我们就来唠叨先锋利器——urllib（Universal resources Locators Library）。
+需要说明的是，在Python 3中，urllib模块一分为三，即分成urllib.request、urllib.parse和urllib.error三个模块，但鉴于多数公司Python脚本开发还是依赖于Python 2.6, 2.7版本，因此讨论urllib还是非常有意义的。</p>
+
+<p>个人认为，urllib模块的主要作用在于打开和储存网页并下载网络链接资源。其中，打开网页主要由urllib.urlopen函数完成，储存网页则由urllib.urlopen.read、urllib.urlopen.readline 和urllib.urlopen.readlines三个函数完成，而urllib.retrieve函数则主要负责网络链接资源的下载。</p>
+
+<p>首先来看urllib.urlopen函数的构造，urllib.urlopen(url[,data[,proxies[,context]]])。乍眼一看，有些繁琐，其实对于大多数初学者而言，个人觉得掌握到data这一层级就已绰绰有余了urllib.urlopen(url[,data])。其中，url就是我们所熟悉的网址，data可能大家不熟悉，其实它是设定以何种方式访问url。我们一般访问url有两种方式，一是get方式，另外一种则是post方式，大多数访问采用的都是get方式，因为它处理起来比较方便些，关于这两种方式联系与区别的具体说明，大家可以Google或度娘下。data的默认访问方式为get方式，一旦赋予data字符串后，那我们则以post的方式访问url。值得指出的是，这里的字符串为经编码函数urlencode处理后的字符串，关于url的编码函数urlencode介绍与应用，大家还是参考一下Python的官方手册，不过在这之前还是建议大家好好掌握字典这一序列对象。
+接下来看urllib.urlopen.read、urllib.urlopen.readline 和urllib.urlopen.readlines三个函数。仔细一看，函数末尾似曾相识。没错，urllib模块继承了Python内建函数open的一些读入存储功能。实践中，应用较多的是urllib.urlopen.read函数，因为该函数能一次读入所有html，这样就会便于我们对网页进行数据挖掘。此外，urllib.urlopen.getcode和urllib.urlopen.geturl这两个函数，我也建议大家多用用，因为它们能起到校验程序的作用。前者返回的是Http状态码，其中，200表示网址链接成功，404则表示网址链接错误；后者返回的则是url网址。</p>
+
+<p>最后我们来看看urllib.urlretrieve函数。它的构造为urllib.urlretrieve (url[,filename [,reporthook[,data]]])。绝大数情形下，我们只需知道如下简易构造即可，urllib.urlretrieve (url[,filename])。其中，url为网址，filename为下载文件名，如果不对filename进行赋值，那么Python会在当前路径下产生一个临时文件保存下载资料。urllib.urlretrieve函数的返回值为一个二元元组(filename, headers)，其中filename为文件名，headers为服务器的响应头。大家在海量下载图片、视频的时候，可以考虑考虑此函数。</p>
+
+<p>时间不早了，在结束之时，给大家两条建议。第一条建议：大家如若想学好Python，除精读Python官方手册外，还需多操作，Python这个东西不能纸上谈兵。第二条建议：大家需掌握一些计算机基本原理与专业英语词汇。关于专业词汇的学习，我建议大家下载一下金山词霸的附带的行业词典，免费的东西，不下白不下。由于本人不是学经济的，计算机原理的书就不推荐了，以免误导大家。</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
